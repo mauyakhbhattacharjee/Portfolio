@@ -2,7 +2,9 @@
 import { GoogleGenAI } from "@google/genai";
 
 const getAI = () => {
-  return new GoogleGenAI({ apiKey: process.env.API_KEY as string });
+  // Use type assertion for process.env as Vite defines it at build time
+  const apiKey = (typeof process !== 'undefined' && process.env) ? process.env.API_KEY : '';
+  return new GoogleGenAI({ apiKey: apiKey as string });
 };
 
 export const chatWithMauyakhAI = async (message: string, history: { role: string, parts: { text: string }[] }[]) => {
